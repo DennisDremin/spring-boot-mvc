@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mvc-app
+  labels:
+    app: mvc-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mvc-app
+      labels:
+        app: mvc-app
+    spec:
+      containers:
+        - name: mvc-app
+          image: segterraregistry.azurecr.io/dd-mvc:%BUILD_ID%
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: '#SPRING_APPLICATION_NAME#'
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: mvc-app
